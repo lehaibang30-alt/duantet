@@ -1,0 +1,301 @@
+:root {
+    --tet-red: #8b0000;
+    --bright-red: #d32f2f;
+    --gold: #ffd700;
+    --gold-gradient: linear-gradient(135deg, #ffd700, #f8e45c, #d4af37);
+    --dark-bg: #2a0000;
+    /* iOS Glass Variables */
+    --glass-bg: rgba(255, 255, 255, 0.08);
+    --glass-border: rgba(255, 255, 255, 0.15);
+    --glass-blur: blur(16px);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Quicksand', sans-serif; }
+
+body {
+    background: radial-gradient(circle at center, #3d0000 0%, #1a0000 100%);
+    color: white;
+    min-height: 100vh;
+}
+
+/* --- iOS GLASSMORPHISM UTILS --- */
+.glass-ios {
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+    border-radius: 20px;
+}
+
+.glass-input {
+    background: rgba(0, 0, 0, 0.2) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    backdrop-filter: blur(4px);
+    color: white !important;
+    transition: all 0.3s;
+}
+.glass-input:focus {
+    background: rgba(0, 0, 0, 0.4) !important;
+    border-color: var(--gold) !important;
+    outline: none;
+}
+
+/* HEADER & FOOTER */
+.header-center, .footer-center { text-align: center; width: 100%; padding: 20px; }
+.tet-title { display: flex; justify-content: center; align-items: center; gap: 15px; margin-bottom: 10px; }
+.main-text {
+    background: var(--gold-gradient); -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent; font-size: 2.5rem; font-weight: 800;
+}
+.subtitle { letter-spacing: 2px; font-weight: 600; color: #ffecb3; }
+.disclaimer { color: rgba(255, 215, 0, 0.7); font-size: 0.9rem; margin-top: 20px; }
+
+/* CONTROLS & LOGO */
+.web-logo-left { position: fixed; top: 20px; left: 20px; z-index: 1000; }
+.web-logo-left img { height: 60px; }
+.controls-left { position: fixed; bottom: 20px; left: 20px; z-index: 1000; }
+.music-btn {
+    color: var(--gold); padding: 10px 15px; cursor: pointer; 
+    font-weight: 600; text-transform: uppercase; letter-spacing: 1px;
+}
+
+/* MAIN LAYOUT */
+.container { 
+    display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 30px; 
+    max-width: 1200px; margin: 0 auto; padding: 20px; 
+}
+
+/* MAP SECTION */
+.map-frame {
+    background: radial-gradient(circle, #3a0000 0%, #1a0000 100%);
+    border: 4px solid #d4af37;
+    border-radius: 12px; box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+    position: relative; overflow: hidden; 
+}
+
+/* LAYER STICKER DECOR (iOS Style) */
+.map-decor-layer {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    pointer-events: none; overflow: hidden; z-index: 1;
+}
+
+/* HEART ANIMATION CLASS */
+.flying-heart {
+    position: absolute;
+    color: var(--bright-red);
+    font-size: 20px;
+    animation: flyHeart 2.5s ease-out forwards;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 25; /* Thấp hơn marker nhưng cao hơn map */
+    text-shadow: 0 0 5px rgba(255,0,0,0.8);
+}
+
+@keyframes flyHeart {
+    0% { transform: translate(-50%, -50%) scale(0.5); opacity: 1; margin-top: 0; }
+    50% { transform: translate(var(--mx), -80px) scale(1.2); opacity: 0.8; }
+    100% { transform: translate(var(--mx), -160px) scale(1.5); opacity: 0; }
+}
+
+/* Sticker rải rác */
+.scatter-sticker {
+    position: absolute; width: 40px; opacity: 0.7;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+    transition: all 0.5s ease;
+    animation: floatAnim 6s ease-in-out infinite;
+}
+
+@keyframes floatAnim {
+    0%, 100% { transform: translateY(0) rotate(var(--r)); }
+    50% { transform: translateY(-10px) rotate(var(--r)); }
+}
+
+/* MAP & MARKER */
+.map-logo-right {
+    position: absolute;
+    bottom: 180px; /* Cách cạnh dưới 20px */
+    left: 10px;   /* Cách cạnh trái 20px */
+    right: auto;  /* Hủy bỏ mặc định bên phải */
+    top: auto;    /* Hủy bỏ mặc định bên trên */
+    z-index: 10;
+}
+.map-logo-right img { height: 40px; opacity: 0.8; }
+
+.map-wrapper { position: relative; width: 100%; height: auto; z-index: 5; }
+#map-img { width: 100%;
+    height: 100%;
+    object-fit: contain; /* Đảm bảo bản đồ luôn nằm trọn trong khung, không bị méo */
+}
+
+#marker { 
+    position: absolute; transform: translate(-50%, -50%); display: none; z-index: 30; 
+}
+.center-dot { 
+    width: 12px; height: 12px; background: var(--bright-red); 
+    border: 2px solid var(--gold); border-radius: 50%; 
+}
+.ring { 
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); 
+    width: 30px; height: 30px; border: 2px solid var(--gold); 
+    border-radius: 50%; animation: pulse 1.5s infinite; 
+}
+
+/* INFO LABEL */
+#province-info {
+    position: absolute; top: 25px; left: 50%; transform: translateX(-50%);
+    padding: 6px 12px; min-width: 120px; text-align: center; 
+    z-index: 40; white-space: nowrap; background: rgba(255, 0, 0, 0.7);
+    border: 1.5px solid #ffd700;
+}
+#province-info.pos-right { top: 50%; left: 20px; transform: translateY(-50%); }
+#province-info.pos-top { top: auto; bottom: 25px; left: 50%; transform: translateX(-50%); }
+#province-label { color: #ffffff; font-weight: 700; font-size: 1rem; text-shadow: 0 1px 2px rgba(0,0,0,0.5); }
+#participation-count { color: var(--gold); font-size: 0.7rem; font-weight: 600; margin-top: 2px; }
+
+/* RESULT OVERLAY (KHUNG THÔNG ĐIỆP) */
+.result-card {
+    position: absolute;
+    top: 5%;      /* Cách mép trên 5% chiều cao khung chụp */
+    right: 5%;    /* Cách mép phải 5% chiều rộng khung chụp */
+    width: 35%;   /* Độ rộng khung chiếm 35% chiều rộng bản đồ */
+    max-width: 300px;
+    z-index: 50;
+}
+
+.result-inner-border.glass-ios-card {
+    background: rgba(139, 0, 0, 0.75); 
+    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    border: 2px solid var(--gold);
+    outline: 2px solid rgba(139, 0, 0, 0.5); outline-offset: 3px;
+    border-radius: 16px; padding: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    text-align: center; position: relative;
+}
+
+/* Đã xóa pseudo-element ::before và ::after chứa dấu hoa sao '✻' */
+
+.result-name {
+    color: var(--gold); font-size: 1.4rem; font-family: 'Dancing Script', cursive;
+    margin-bottom: 10px; text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+}
+
+/* STYLE CHO MEDIA (ẢNH/VIDEO) TRONG RESULT */
+.media-display-box {
+    width: 100%;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 215, 0, 0.5);
+    background: rgba(0,0,0,0.2);
+    display: flex; justify-content: center; align-items: center;
+}
+.media-display-box img, .media-display-box video {
+    width: 100%; height: auto; display: block; object-fit: cover; max-height: 150px;
+}
+
+.result-message-text {
+    font-size: 0.95rem; color: #fff; line-height: 1.5; 
+    font-style: italic; word-wrap: break-word;
+    text-shadow: 0 1px 1px rgba(0,0,0,0.5);
+}
+
+/* SIDEBAR & FORM */
+.glass-container { padding: 25px; height: 100%; display: flex; flex-direction: column; }
+.section-label { color: var(--gold); margin-bottom: 20px; font-size: 1.2rem; }
+
+.province-grid { 
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); 
+    gap: 8px; max-height: 600px; overflow-y: auto; padding-right: 5px;
+}
+.custom-scroll::-webkit-scrollbar, .province-grid::-webkit-scrollbar { width: 5px; }
+.custom-scroll::-webkit-scrollbar-thumb, .province-grid::-webkit-scrollbar-thumb { background: rgba(255,215,0,0.3); border-radius: 10px; }
+
+.province-item { 
+    background: rgba(255,255,255,0.05); padding: 10px; cursor: pointer; 
+    border-radius: 12px; font-size: 0.85rem; text-align: center; transition: all 0.3s;
+    border: 1px solid transparent;
+}
+.province-item:hover { background: rgba(255,215,0,0.1); border-color: var(--gold); }
+.province-item.selected { background: var(--bright-red); border: 1px solid var(--gold); color: white; box-shadow: 0 0 10px rgba(211, 47, 47, 0.6); }
+
+/* CREATOR FORM */
+.creator-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+.step-title { color: var(--gold); font-size: 1.2rem; font-family: 'Dancing Script', cursive; }
+.small-btn { font-size: 0.7rem; padding: 4px 10px; color: #ccc; border: 1px solid #555; background: rgba(0,0,0,0.3); cursor: pointer; }
+
+.input-group { margin-bottom: 15px; }
+.input-group label { display: block; color: #ddd; font-size: 0.9rem; margin-bottom: 5px; font-weight: 600; }
+.custom-select, textarea, .custom-input { width: 100%; padding: 10px; border-radius: 10px; font-size: 0.9rem; }
+textarea { height: 80px; resize: none; }
+
+.sticker-grid { 
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; 
+    background: rgba(0,0,0,0.15); padding: 10px; border-radius: 12px;
+    max-height: 180px; overflow-y: auto;
+}
+.sticker-opt { 
+    width: 100%; height: 60px; object-fit: contain; cursor: pointer; 
+    border: 2px solid transparent; border-radius: 8px; transition: transform 0.2s; 
+    opacity: 0.7;
+}
+.sticker-opt:hover { transform: scale(1.1); opacity: 1; }
+.sticker-opt.selected { 
+    border-color: var(--gold); background: rgba(255,215,0,0.15); 
+    opacity: 1; transform: scale(1.05);
+}
+
+.full-width { width: 100%; margin-top: 5px; }
+.submit-btn, .download-btn {
+    background: var(--gold-gradient); color: #4a0000;
+    padding: 12px; border-radius: 12px; border: none; 
+    font-weight: 800; cursor: pointer; text-transform: uppercase; 
+    font-size: 0.9rem; box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
+    transition: transform 0.2s;
+}
+.submit-btn:active { transform: scale(0.98); }
+
+/* MODAL */
+.modal-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(5px);
+    display: none; align-items: center; justify-content: center; z-index: 2000;
+}
+.modal-content {
+    width: 90%; max-width: 500px; padding: 30px; text-align: center;
+    border: 1px solid var(--gold);
+}
+.question-display { color: #ffecb3; font-size: 1.1rem; margin-bottom: 20px; font-weight: bold; line-height: 1.5; }
+#modal-answer { height: 100px; margin-bottom: 20px; }
+.upload-section {
+    margin-top: 15px;
+    display: flex;          /* Kích hoạt flexbox */
+    flex-direction: column; /* Xếp các phần tử (nút và tên file) theo hàng dọc */
+    align-items: center;    /* Căn giữa tất cả các phần tử con theo chiều ngang */
+    justify-content: center;/* Căn giữa theo chiều dọc nếu cần */
+    width: 100%;            /* Đảm bảo khung bao phủ hết chiều rộng modal */
+}
+.upload-label {
+    display: inline-block; padding: 8px 12px; cursor: pointer;
+    border: 1px dashed var(--gold); border-radius: 8px; color: #ddd;
+    transition: 0.3s;
+}
+.upload-label:hover {
+    background: rgba(255, 215, 0, 0.2);
+    transform: translateY(-2px); /* Hiệu ứng nổi lên khi di chuột */
+}
+#file-name-preview {
+    font-size: 0.8rem;
+    color: #ffd700;
+    margin-top: 8px;
+    font-style: italic;
+    text-align: center;     /* Căn giữa dòng chữ tên file sau khi chọn */
+}
+@keyframes pulse { 0% { transform: translate(-50%, -50%) scale(0.5); opacity: 1; } 100% { transform: translate(-50%, -50%) scale(2); opacity: 0; } }
+@keyframes slideDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+
+@media (max-width: 768px) {
+    .container { grid-template-columns: 1fr; }
+    .web-logo-left { display: none; }
+    .result-card { width: 220px; right: 10px; top: 50px; }
+}

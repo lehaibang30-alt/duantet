@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CHUYẾN XE TẾT 2026 - HÀNH TRÌNH CẢM XÚC</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+<body>
+    <div class="web-logo-left">
+        <img src="Picture/LogoPhuongTrangtach.png" alt="Logo Sponsor">
+    </div>
+
+    <audio id="bg-music" loop>
+        <source src="Music/Nhacnenwebnhomloc1.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="click-sound">
+        <source src="Music/SoundClick.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="controls-left">
+        <button id="music-control" class="music-btn glass-ios">🎵 Bật Nhạc Xuân</button>
+    </div>
+
+    <header class="header-center">
+        <h1 class="tet-title">
+            <span class="symbol">🏮</span>
+            <span class="main-text">TẾT CHẠM YÊU THƯƠNG</span>
+            <span class="symbol">🏮</span>
+        </h1>
+        <p class="subtitle">HÀNH TRÌNH ĐOÀN VIÊN • KẾT NỐI CẢM XÚC</p>
+    </header>
+
+    <main class="container">
+        <section class="map-section">
+            <div id="capture-area" class="map-frame">
+                
+                <div id="user-bg-decor-layer" class="map-decor-layer"></div>
+
+                <div id="heart-layer" class="map-decor-layer" style="z-index: 20;"></div>
+
+                <div class="map-logo-right">
+                    <img src="Picture/LogoPhuongTrangtach.png" alt="Sponsor" crossOrigin="anonymous">
+                </div>
+
+                <div class="map-wrapper">
+                    <img src="Picture/BandoVNkhongchutach.png" alt="Bản đồ Việt Nam" id="map-img" crossOrigin="anonymous">
+                    
+                    <div id="marker">
+                        <div class="ring"></div>
+                        <div class="center-dot"></div>
+                        <div id="province-info" class="glass-ios">
+                            <div id="province-label">Tên Tỉnh</div>
+                            <div id="participation-count">0 người tham gia</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="result-overlay" class="result-card" style="display: none;">
+                    <div class="result-inner-border glass-ios-card">
+                        <h4 id="result-name-display" class="result-name"></h4> 
+                        
+                        <div id="result-media-container" class="media-display-box" style="display: none;"></div>
+
+                        <p id="result-message" class="result-message-text"></p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section class="sidebar-section">
+            <div class="glass-container glass-ios">
+                
+                <div id="step-1-province">
+                    <h2 class="section-label">📍 Chọn quê hương của bạn</h2>
+                    <div class="province-grid" id="province-list">
+                        <div class="province-item" data-x="8.9" data-y="14.0">Điện Biên</div>
+                        <div class="province-item" data-x="9.5" data-y="9.0">Lai Châu</div>
+                        <div class="province-item" data-x="15.5" data-y="10.0">Lào Cai</div>
+                        <div class="province-item" data-x="24.5" data-y="10.5">Tuyên Quang</div>
+                        <div class="province-item" data-x="30" data-y="13.9">Thái Nguyên</div>
+                        <div class="province-item" data-x="30.9" data-y="6.5">Cao Bằng</div>
+                        <div class="province-item" data-x="35.2" data-y="11.8">Lạng Sơn</div>
+                        <div class="province-item" data-x="13.5" data-y="16.5">Sơn La</div>
+                        <div class="province-item" data-x="23.5" data-y="17.8">Phú Thọ</div>
+                        <div class="province-item" data-x="32.0" data-y="15.9">Bắc Ninh</div>
+                        <div class="province-item" data-x="40.5" data-y="16">Quảng Ninh</div>
+                        <div class="province-item" data-x="30.0" data-y="18.9">Hà Nội</div>
+                        <div class="province-item" data-x="35.5" data-y="18.8">Hải Phòng</div>
+                        <div class="province-item" data-x="34.8" data-y="22.2">Hưng Yên</div>
+                        <div class="province-item" data-x="32.5" data-y="23.9">Ninh Bình</div>
+                        <div class="province-item" data-x="28.0" data-y="25.0">Thanh Hóa</div>
+                        <div class="province-item" data-x="24.0" data-y="32.0">Nghệ An</div>
+                        <div class="province-item" data-x="29.0" data-y="36.5">Hà Tĩnh</div>
+                        <div class="province-item" data-x="36.0" data-y="45.0">Quảng Trị</div>
+                        <div class="province-item" data-x="43.0" data-y="50.0">Huế</div>
+                        <div class="province-item" data-x="47.0" data-y="55.0">Đà Nẵng</div>
+                        <div class="province-item" data-x="50.0" data-y="59.0">Quảng Ngãi</div>
+                        <div class="province-item" data-x="51.0" data-y="65.0">Gia Lai</div>
+                        <div class="province-item" data-x="50.0" data-y="73.0">Đắk Lắk</div>
+                        <div class="province-item" data-x="54.0" data-y="77.0">Khánh Hòa</div>
+                        <div class="province-item" data-x="46.0" data-y="80.0">Lâm Đồng</div>
+                        <div class="province-item" data-x="40.0" data-y="81.5">Đồng Nai</div>
+                        <div class="province-item" data-x="36.0" data-y="85.5">TP HCM</div>
+                        <div class="province-item" data-x="33.0" data-y="86.5">Tây Ninh</div>
+                        <div class="province-item" data-x="30.0" data-y="88.0">Đồng Tháp</div>
+                        <div class="province-item" data-x="33.0" data-y="90.5">Vĩnh Long</div>
+                        <div class="province-item" data-x="23.5" data-y="89.0">An Giang</div>
+                        <div class="province-item" data-x="29.0" data-y="92.8">Cần Thơ</div>
+                        <div class="province-item" data-x="24.0" data-y="97.0">Cà Mau</div>
+                    </div>
+                </div>
+
+                <div id="step-2-creator" style="display: none;">
+                    <div class="creator-header">
+                        <h3 class="step-title">✨ Gửi Gắm Yêu Thương ✨</h3>
+                        <button id="back-btn" class="small-btn glass-ios">↩ Chọn lại</button>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label>Tên của bạn:</label>
+                        <input type="text" id="user-name" class="custom-input glass-input" placeholder="Nhập tên hiển thị..." maxlength="20">
+                    </div>
+
+                    <div class="input-group">
+                        <label>Chọn câu mở đầu:</label>
+                        <select id="sentence-starter" class="custom-select glass-input">
+                            <option value="Tết năm đó, tôi nhớ nhất là">Tết năm đó, tôi nhớ nhất là...</option>
+                            <option value="Mỗi lần nghĩ đến nhà, tôi nhớ">Mỗi lần nghĩ đến nhà, tôi nhớ...</option>
+                            <option value="Món ăn Tết làm tôi nhớ nhà nhất là">Món ăn Tết làm tôi nhớ nhà nhất là...</option>
+                            <option value="Người tôi muốn gặp nhất mỗi dịp Tết là">Người tôi muốn gặp nhất mỗi dịp Tết là...</option>
+                            <option value="Tết năm nay tôi không về, nhưng">Tết năm nay tôi không về, nhưng...</option>
+                            <option value="Nhà tôi cách đây ___ km, và tôi nhớ">Nhà tôi cách đây ___ km, và tôi nhớ...</option>
+                        </select>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Viết tiếp câu chuyện (Tối đa 1000 ký tự):</label>
+                        <textarea id="user-content" class="glass-input" placeholder="..." maxlength="1000"></textarea>
+                    </div>
+
+                    <div class="sticker-section">
+                        <label>Chọn tối đa 3 Sticker trang trí:</label>
+                        <div class="sticker-grid custom-scroll">
+                            <img src="Picture/Sticker1.png" class="sticker-opt" onclick="selectSticker(this)">
+                            <img src="Picture/Sticker2.png" class="sticker-opt" onclick="selectSticker(this)">
+                            <img src="Picture/Sticker3.png" class="sticker-opt" onclick="selectSticker(this)">
+                            <img src="Picture/Sticker4.png" class="sticker-opt" onclick="selectSticker(this)">
+                            <img src="Picture/Sticker5.png" class="sticker-opt" onclick="selectSticker(this)">
+                            <img src="Picture/Sticker6.jpg" class="sticker-opt" onclick="selectSticker(this)">
+                            <img src="Picture/Sticker7.jpg" class="sticker-opt" onclick="selectSticker(this)">
+                            <img src="Picture/Sticker8.png" class="sticker-opt" onclick="selectSticker(this)">
+                            <img src="Picture/Sticker9.png" class="sticker-opt" onclick="selectSticker(this)">
+                            <img src="Picture/Sticker10.png" class="sticker-opt" onclick="selectSticker(this)">
+                            <img src="Picture/Sticker11.png" class="sticker-opt" onclick="selectSticker(this)">
+                        </div>
+                    </div>
+
+                    <button id="update-map-btn" class="submit-btn full-width">📌 Ghim Lên Bản Đồ</button>
+                    <button id="download-btn" class="download-btn full-width" style="display: none; margin-top:10px;">📸 Tải Ảnh Về Máy</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="question-modal" class="modal-overlay">
+        <div class="modal-content glass-ios">
+            <div class="modal-header">
+                <h3>🌸 Tâm Tình Ngày Tết 🌸</h3>
+            </div>
+            <div class="modal-body">
+                <p id="random-question-text" class="question-display"></p>
+                <textarea id="modal-answer" class="glass-input" placeholder="Chia sẻ đôi dòng cảm xúc của bạn..."></textarea>
+                
+                <div class="upload-section" style="margin-top: 15px; text-align: left;">
+                    <label for="media-upload" class="upload-label glass-input">
+                        📎 Đính kèm Ảnh hoặc Video
+                    </label>
+                    <input type="file" id="media-upload" accept="image/*,video/*" style="display: none;">
+                    <div id="file-name-preview" style="font-size: 0.8rem; color: #ffd700; margin-top: 5px; font-style: italic;"></div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button id="submit-modal-answer" class="submit-btn">Gửi & Tiếp Tục</button>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer-center">
+        <p class="disclaimer">Hành trình Tết 2026 - Kết nối những trái tim xa xứ.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
